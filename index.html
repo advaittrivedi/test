@@ -1,3 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US States and Capitals</title>
+    <style>
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #ff0;
+            animation: fall 3s linear infinite;
+        }
 
-Hello world!
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>US States and Capitals</h1>
+    <h2>Your screen time reward is <span id="screenTime">0</span> minutes</h2>
+    <p>Enter the capital of each state in the input box below the state name. Click the "Check Answer" button to see if you are correct.</p>
+    <div id="states-capitals-screen-time-questions"></div>
+    <script>
+        const statesAndCapitals = {
+            "Alabama": "Montgomery",
+            "Alaska": "Juneau",
+            "Arizona": "Phoenix",
+            "Arkansas": "Little Rock",
+            "California": "Sacramento",
+            "Colorado": "Denver",
+            "Connecticut": "Hartford",
+            "Delaware": "Dover",
+            "Florida": "Tallahassee",
+            "Georgia": "Atlanta",
+            "Hawaii": "Honolulu",
+            "Idaho": "Boise",
+            "Illinois": "Springfield",
+            "Indiana": "Indianapolis",
+            "Iowa": "Des Moines",
+            "Kansas": "Topeka",
+            "Kentucky": "Frankfort",
+            "Louisiana": "Baton Rouge",
+            "Maine": "Augusta",
+            "Maryland": "Annapolis",
+            "Massachusetts": "Boston",
+            "Michigan": "Lansing",
+            "Minnesota": "Saint Paul",
+            "Mississippi": "Jackson",
+            "Missouri": "Jefferson City",
+            "Montana": "Helena",
+            "Nebraska": "Lincoln",
+            "Nevada": "Carson City",
+            "New Hampshire": "Concord",
+            "New Jersey": "Trenton",
+            "New Mexico": "Santa Fe",
+            "New York": "Albany",
+            "North Carolina": "Raleigh",
+            "North Dakota": "Bismarck",
+            "Ohio": "Columbus",
+            "Oklahoma": "Oklahoma City",
+            "Oregon": "Salem",
+            "Pennsylvania": "Harrisburg",
+            "Rhode Island": "Providence",
+            "South Carolina": "Columbia",
+            "South Dakota": "Pierre",
+            "Tennessee": "Nashville",
+            "Texas": "Austin",
+            "Utah": "Salt Lake City",
+            "Vermont": "Montpelier",
+            "Virginia": "Richmond",
+            "Washington": "Olympia",
+            "West Virginia": "Charleston",
+            "Wisconsin": "Madison",
+            "Wyoming": "Cheyenne",
+            "National Capital": "Washington, D.C."
+        };
 
+        const listElement = document.getElementById('states-capitals-list');
+        const randomQuestions = getRandomEntries(statesAndCapitals, 10);
+        let screenTime = 0;
+
+        function checkAnswer(state) {
+            const answer = document.getElementById(`${state}-answer`).value;
+            document.getElementById(`${state}-answer`).setAttribute('disabled', true);
+            const result = document.getElementById(`${state}-result`);
+            if (answer === statesAndCapitals[state]) {
+                result.textContent = 'Correct!';
+                screenTime += 0.5;
+                document.body.classList.add('confetti');
+                setTimeout(() => {
+                    document.body.classList.remove('confetti');
+                }, 3000);
+            } else {
+                result.textContent = `Incorrect. The capital of ${state} is ${statesAndCapitals[state]}.`;
+            }
+            document.getElementById('screenTime').textContent = screenTime;
+        }
+
+        for (let question of randomQuestions) {
+            let questionEl = document.createElement('div');
+            let state = question[0];
+            questionEl.setAttribute('id', state);
+            questionEl.innerHTML = `<h2>${state}</h2><p>What is the capital of ${state}?</p><input type="text" id="${state}-answer" placeholder="Enter the capital of ${state}"><button onclick="checkAnswer('${state}')">Check Answer</button><p id="${state}-result"></p>`;
+            document.getElementById('states-capitals-screen-time-questions').appendChild(questionEl);
+        }
+
+        function getRandomEntries(obj, numEntries) {
+            const entries = Object.entries(obj);
+            const shuffled = entries.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, numEntries);
+        }
+
+        const randomEntries = getRandomEntries(statesAndCapitals, 10);
+        console.log(randomEntries);
+    </script>
+</body>
+</html>
