@@ -88,12 +88,14 @@
         const listElement = document.getElementById('states-capitals-list');
         const randomQuestions = getRandomEntries(statesAndCapitals, 10);
         let screenTime = 0;
+        let rightAnswersCount = 0;
 
         function checkAnswer(state) {
             const answer = document.getElementById(`${state}-answer`).value;
             document.getElementById(`${state}-answer`).setAttribute('disabled', true);
             const result = document.getElementById(`${state}-result`);
             if (answer === statesAndCapitals[state]) {
+                rightAnswersCount++;
                 result.textContent = 'Correct!';
                 screenTime += 0.5;
                 document.body.classList.add('confetti');
@@ -104,6 +106,9 @@
                 result.textContent = `Incorrect. The capital of ${state} is ${statesAndCapitals[state]}.`;
             }
             document.getElementById('screenTime').textContent = screenTime;
+            if (rightAnswersCount==10) {
+                
+            }
         }
 
         for (let question of randomQuestions) {
