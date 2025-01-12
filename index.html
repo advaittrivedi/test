@@ -89,6 +89,7 @@
         const randomQuestions = getRandomEntries(statesAndCapitals, 10);
         let screenTime = 0;
         let rightAnswersCount = 0;
+        let streak = 0;
 
         function checkAnswer(state) {
             const answer = document.getElementById(`${state}-answer`).value;
@@ -107,7 +108,7 @@
             }
             document.getElementById('screenTime').textContent = screenTime;
             if (rightAnswersCount==10) {
-                console.log(rightAnswersCount);
+                localStorage.setItem("Streak", streak + 1 );
             }
         }
 
