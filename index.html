@@ -108,7 +108,8 @@
             }
             document.getElementById('screenTime').textContent = screenTime;
             if (rightAnswersCount==10) {
-                localStorage.setItem("Streak", streak + 1 );
+                streak = streak +1;
+                localStorage.setItem("Streak", streak);
             }
         }
 
